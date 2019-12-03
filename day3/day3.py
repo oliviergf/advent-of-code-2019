@@ -66,8 +66,6 @@ def addsCircuitPosition(moves, positions):
                 currentPos[0] = currentPos[0] + 1
             positions.append(str(currentPos[0])+":"+str(currentPos[1]))
 
-    print(len(positions))
-
 
 def common_member(a, b):
     a_set = set(a)
@@ -89,5 +87,5 @@ def findClosest(communs):
     return closestDist
 
 
-# part1(lines)
+part1(lines)
 part2(lines)
