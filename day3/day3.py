@@ -50,7 +50,7 @@ def addsCircuitPosition(moves):
     for move in moves:
         # splits up the commands makes likes ["L","345"]
         deplacement = regex.split(move)
-        for i in range(0, int(deplacement[1])):
+        for _ in range(0, int(deplacement[1])):
             if deplacement[0] == 'U':
                 currentPos[1] = currentPos[1] + 1
             elif deplacement[0] == 'D':
