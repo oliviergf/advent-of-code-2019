@@ -5,11 +5,8 @@ lines = inputs.readlines()
 
 
 def part1(lines):
-    wirePos1 = []
-    wirePos2 = []
-
-    addsCircuitPosition(lines[0].split(","), wirePos1)
-    addsCircuitPosition(lines[1].split(","), wirePos2)
+    wirePos1 = addsCircuitPosition(lines[0].split(","))
+    wirePos2 = addsCircuitPosition(lines[1].split(","))
 
     communs = common_member(wirePos1, wirePos2)
     closest = findClosest(communs)
@@ -17,11 +14,8 @@ def part1(lines):
 
 
 def part2(lines):
-    wirePos1 = []
-    wirePos2 = []
-
-    addsCircuitPosition(lines[0].split(","), wirePos1)
-    addsCircuitPosition(lines[1].split(","), wirePos2)
+    wirePos1 = addsCircuitPosition(lines[0].split(","))
+    wirePos2 = addsCircuitPosition(lines[1].split(","))
 
     communs = common_member(wirePos1, wirePos2)
     nbOfSteps = findClosestIntersection(communs, wirePos1, wirePos2)
@@ -48,7 +42,8 @@ def findStepToIntersec(intersection, positions):
     return steps
 
 
-def addsCircuitPosition(moves, positions):
+def addsCircuitPosition(moves):
+    positions = []
     currentPos = [0, 0]
     regex = re.compile(r'(\d+|\s+)')
 
@@ -65,6 +60,8 @@ def addsCircuitPosition(moves, positions):
             elif deplacement[0] == 'R':
                 currentPos[0] = currentPos[0] + 1
             positions.append(str(currentPos[0])+":"+str(currentPos[1]))
+
+    return positions
 
 
 def common_member(a, b):
