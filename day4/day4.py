@@ -42,6 +42,7 @@ def hasUnique(consecutives):
     for key in uniques:
         if(uniques[key] == 1):
             hasSingle = True
+            break
     return hasSingle
 
 
