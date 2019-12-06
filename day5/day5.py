@@ -1,8 +1,8 @@
-import math
 inputs = open("day5/input.txt", "r")
 line = inputs.readline().split(",")
 
-# to whoever might look at this code, i know it absolute garbage. BUT! it works xD also its recursive so its cool
+# to whoever might look at this code, i know it's absolute garbage. I got lazy on this one.
+# BUT! it works xD also its recursive so its cool
 
 
 def part1(inputs):
