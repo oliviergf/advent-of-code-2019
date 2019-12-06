@@ -1,5 +1,8 @@
+import sys
 inputs = open("day6/input.txt", "r")
 orbits = list(map(lambda x: x.rstrip(), inputs.readlines()))
+
+sys.setrecursionlimit(4600)
 
 
 class Planet:
@@ -15,7 +18,7 @@ class Planet:
         self.orbits = planet
 
 
-def part1(orbits):
+def part1and2(orbits):
     galactic = {}
     for orbit in orbits:
         [planet, orbiter] = orbit.split(")")
@@ -36,19 +39,33 @@ def part1(orbits):
             new_planet.orbits_planet(planet)
             galactic[new_planet.name] = new_planet
 
-    direct_orbits = len(galactic)
-    indirect_orbits = follow_to_COM(galactic)
-    print(indirect_orbits)
+    total_orbits = follow_to_COM(galactic)
+    print("total orbits: " + str(total_orbits))
+    part2(galactic)
+
+
+def part2(galactic):
+    find_santa(galactic[galactic["YOU"].orbits], galactic, 0)
+
+
+def find_santa(planet_visited, galactic, path):
+    if "SAN" in galactic[planet_visited.name].orbiters:
+        print(path)
+    elif planet_visited.name != "COM":
+        for planet in galactic[planet_visited.name].orbiters:
+            if planet != "YOU":
+                find_santa(galactic[planet], galactic, path + 1)
+        find_santa(galactic[planet_visited.orbits], galactic, path + 1)
 
 
 def follow_to_COM(galactic):
-    indirectOrbits = 0
+    total_orbits = 0
     for planet in galactic:
         current_planet = galactic[planet]
         while current_planet.name != 'COM':
             current_planet = galactic[current_planet.orbits]
-            indirectOrbits += 1
-    return indirectOrbits
+            total_orbits += 1
+    return total_orbits
 
 
-part1(orbits)
+part1and2(orbits)
