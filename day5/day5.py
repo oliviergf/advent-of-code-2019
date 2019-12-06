@@ -28,17 +28,10 @@ def intComputer(commands, index, onlyInput):
 
     instruction = reverse_instruction[0]
 
+    output = ""
+
     if instruction is not '9':
-        first = commands[commands[index+1]
-                         ] if reverse_instruction[2] == '0' else commands[index+1]
-        second = commands[commands[index+2]
-                          ] if reverse_instruction[3] == '0' else commands[index+2]
-        pos = commands[commands[index +
-                                3]] if reverse_instruction[4] == '0' else commands[index+3]
-        if instruction == '1':
-            commands[pos] = first + second
-            intComputer(commands, index + 4, onlyInput)
-        elif instruction == '3':
+        if instruction == '3':
             if reverse_instruction[2] == "1":
                 commands[index + 1] = onlyInput
             else:
@@ -46,13 +39,23 @@ def intComputer(commands, index, onlyInput):
             intComputer(commands, index + 2, onlyInput)
         elif instruction == '4':
             if reverse_instruction[2] == "1":
-                print(str(commands[index + 1]) + ",")
+                output += str(commands[index + 1]) + ","
             else:
-                print(str(commands[commands[index + 1]]) + ",")
+                output += str(commands[commands[index + 1]]) + ","
             intComputer(commands, index + 2, onlyInput)
         else:
-            commands[pos] = first * second
-            intComputer(commands, index + 4, onlyInput)
+            first = commands[commands[index+1]
+                             ] if reverse_instruction[2] == '0' else commands[index+1]
+            second = commands[commands[index+2]
+                              ] if reverse_instruction[3] == '0' else commands[index+2]
+            pos = commands[index+3]
+            if instruction == '1':
+                commands[pos] = first + second
+                intComputer(commands, index + 4, onlyInput)
+            else:
+                commands[pos] = first * second
+                intComputer(commands, index + 4, onlyInput)
+    print(output)
 
 
 part1(line)
