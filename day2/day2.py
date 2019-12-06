@@ -1,19 +1,17 @@
 import math
 inputs = open("day2/input.txt", "r")
-line = inputs.readline()
+line = inputs.readline().split(",")
 
 
-def part1(line):
-    inputs = line.split(",")
+def part1(inputs):
     commands = list(map(int, inputs))
     intComputer(commands, 0)
     print(commands[0])
 
 
-def part2(line):
+def part2(inputs):
     for i in range(0, 100):
         for y in range(0, 100):
-            inputs = line.split(",")
             commands = list(map(int, inputs))
             commands[1] = i
             commands[2] = y
