@@ -1,8 +1,9 @@
 import sys
-inputs = open("day6/input.txt", "r")
+inputs = open(
+    "day6/input.txt", "r")
 orbits = list(map(lambda x: x.rstrip(), inputs.readlines()))
 
-sys.setrecursionlimit(4600)
+sys.setrecursionlimit(10**6)
 
 
 class Planet:
@@ -49,13 +50,13 @@ def part2(galactic):
 
 
 def find_santa(planet_visited, galactic, path):
-    if "SAN" in galactic[planet_visited.name].orbiters:
+    if "SAN" in planet_visited.orbiters:
         print(path)
     elif planet_visited.name != "COM":
+        find_santa(galactic[planet_visited.orbits], galactic, path + 1)
         for planet in galactic[planet_visited.name].orbiters:
             if planet != "YOU":
                 find_santa(galactic[planet], galactic, path + 1)
-        find_santa(galactic[planet_visited.orbits], galactic, path + 1)
 
 
 def follow_to_COM(galactic):
