@@ -7,7 +7,6 @@ def part1(inputs):
     commands = list(map(int, inputs))
     onlyInput = 1
     intComputer(commands, 0, onlyInput)
-    print(commands[0])
 
 
 # def part2(inputs):
@@ -23,19 +22,33 @@ def part1(inputs):
 
 
 def intComputer(commands, index, onlyInput):
-    instruction = commands[index]
-    if instruction != 99:
-        first = commands[commands[index+1]]
-        second = commands[commands[index+2]]
-        pos = commands[index+3]
-        if instruction == 1:
+    reverse_instruction = str(commands[index])[::-1]
+    while(len(reverse_instruction) is not 5):
+        reverse_instruction += "0"
+
+    instruction = reverse_instruction[0]
+
+    if instruction is not '9':
+        first = commands[commands[index+1]
+                         ] if reverse_instruction[2] == '0' else commands[index+1]
+        second = commands[commands[index+2]
+                          ] if reverse_instruction[3] == '0' else commands[index+2]
+        pos = commands[commands[index +
+                                3]] if reverse_instruction[4] == '0' else commands[index+3]
+        if instruction == '1':
             commands[pos] = first + second
             intComputer(commands, index + 4, onlyInput)
-        elif instruction == 3:
-            commands[index + 1] = onlyInput
+        elif instruction == '3':
+            if reverse_instruction[2] == "1":
+                commands[index + 1] = onlyInput
+            else:
+                commands[commands[index + 1]] = onlyInput
             intComputer(commands, index + 2, onlyInput)
-        elif instruction == 4:
-            print(commands[index + 1])
+        elif instruction == '4':
+            if reverse_instruction[2] == "1":
+                print(str(commands[index + 1]) + ",")
+            else:
+                print(str(commands[commands[index + 1]]) + ",")
             intComputer(commands, index + 2, onlyInput)
         else:
             commands[pos] = first * second
