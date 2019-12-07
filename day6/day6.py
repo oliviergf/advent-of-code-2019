@@ -47,18 +47,30 @@ def part1and2(orbits):
 
 
 def part2(galactic):
-    find_santa(galactic[galactic["YOU"].orbits], galactic, 0)
+    you_first_planet = galactic["YOU"].orbits
+    santa_first_planet = galactic["SAN"].orbits
+    you_path = find_path_to_COM(galactic[you_first_planet], galactic)
+    santa_path = find_path_to_COM(galactic[santa_first_planet], galactic)
+    you_path.reverse()
+    santa_path.reverse()
+    last_commun_element = 0
+    commun_Path = True
+    while commun_Path:
+        if you_path[last_commun_element].name == santa_path[last_commun_element].name:
+            last_commun_element += 1
+        else:
+            commun_Path = False
+    print("shortest path to santa :" + str(len(you_path) +
+                                           len(santa_path) - last_commun_element*2))
 
 
-# ca va dans les deux directions ca mais il faut que chaque call aille dans une seul direction....
-def find_santa(planet_visited, galactic, path):
-    if "SAN" in planet_visited.orbiters:
-        print(path)
-    elif planet_visited.name != "COM" and len(planet_visited.orbiters) > 0:
-        find_santa(galactic[planet_visited.orbits], galactic, path + 1)
-        for planet in galactic[planet_visited.name].orbiters:
-            if planet != "YOU":
-                find_santa(galactic[planet], galactic, path + 1)
+def find_path_to_COM(first_planet, galactic):
+    planet_visited = first_planet
+    path_to_com = []
+    while planet_visited.name != "COM":
+        path_to_com.append(planet_visited)
+        planet_visited = galactic[planet_visited.orbits]
+    return path_to_com
 
 
 def follow_to_COM(galactic):
@@ -71,5 +83,4 @@ def follow_to_COM(galactic):
     return total_orbits
 
 
-sys.settrace(
-    part1and2(orbits))
+part1and2(orbits)
