@@ -1,4 +1,5 @@
 import sys
+
 inputs = open(
     "day6/input.txt", "r")
 orbits = list(map(lambda x: x.rstrip(), inputs.readlines()))
@@ -49,10 +50,11 @@ def part2(galactic):
     find_santa(galactic[galactic["YOU"].orbits], galactic, 0)
 
 
+# ca va dans les deux directions ca mais il faut que chaque call aille dans une seul direction....
 def find_santa(planet_visited, galactic, path):
     if "SAN" in planet_visited.orbiters:
         print(path)
-    elif planet_visited.name != "COM":
+    elif planet_visited.name != "COM" and len(planet_visited.orbiters) > 0:
         find_santa(galactic[planet_visited.orbits], galactic, path + 1)
         for planet in galactic[planet_visited.name].orbiters:
             if planet != "YOU":
@@ -69,4 +71,5 @@ def follow_to_COM(galactic):
     return total_orbits
 
 
-part1and2(orbits)
+sys.settrace(
+    part1and2(orbits))
