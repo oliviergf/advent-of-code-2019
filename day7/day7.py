@@ -84,7 +84,44 @@ def part1(inputs):
     for value in thrusters_values:
         if value > max:
             max = value
-    print(max)
+    print("part1: " + str(max))
+
+
+def part2(inputs):
+    commands = list(map(int, inputs))
+    thrusters_values = []
+    possible_inputs = [list(p) for p in permutations([5, 6, 7, 8, 9])]
+    test = 0
+
+    for inputs in possible_inputs:
+        pair_of_inputs = [None, None]
+        looping = False
+        isRunning = True
+        test += 1
+        while isRunning:
+            for i in range(0, 5):
+                if i == 0 and not looping:
+                    pair_of_inputs[1] = 0
+                    looping = True
+                elif i == 0 and looping:
+                    pair_of_inputs[1] = int_computer_output[0]
+                # phase setting
+                pair_of_inputs[0] = inputs[i]
+                intComputer(commands, 0, pair_of_inputs, True)
+                if len(int_computer_output) == 0:
+                    isRunning = False
+                    break
+                pair_of_inputs[1] = int_computer_output[0]
+                if i != 4:
+                    int_computer_output.clear()
+            thrusters_values.append(int_computer_output[0])
+            print(test)
+    max = 0
+    for value in thrusters_values:
+        if value > max:
+            max = value
+    print("part2: " + str(max))
 
 
 part1(line)
+part2(line)
