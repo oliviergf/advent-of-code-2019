@@ -1,13 +1,33 @@
 inputs = open("day8/input.txt", "r")
 pixels = list(inputs.readline())
 
+layers = []
+row_size = 25
+col_size = 6
 
-def part1(pixels):
-    row_size = 25
-    col_size = 6
+
+def part2(layers, row_size, col_size):
+    message = []
+    for i in range(col_size):
+        row = []
+        for j in range(row_size):
+            pixel = "z"
+            for l in reversed(range(len(layers))):
+                if layers[l][i][j] == "1":
+                    pixel = "x"
+                if layers[l][i][j] == "0":
+                    pixel = "."
+            row.append(pixel)
+        message.append(row)
+
+    for i in range(col_size):
+        for j in range(row_size):
+            print(message[i][j], end=" ")
+        print()
+
+
+def part1(pixels, layers, row_size, col_size):
     size_image = row_size * col_size
-
-    layers = []
     layers_zeros = []
     pixel_count = 0
     while pixel_count != len(pixels) - 1:
@@ -42,4 +62,5 @@ def part1(pixels):
     print(str(ones * twos))
 
 
-part1(pixels)
+part1(pixels, layers, row_size, col_size)
+part2(layers, row_size, col_size)
