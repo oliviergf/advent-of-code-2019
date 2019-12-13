@@ -8,8 +8,10 @@ def intComputer(commands, index, onlyInput, outputs, relative_base):
         instruction += "0"
 
     op_code = instruction[0]
+    op_code_dec = instruction[1]
+    cond = op_code + op_code_dec
 
-    if op_code is not '9':
+    if cond != '99':
         # first value
         if instruction[2] == "0":
             # position mode
@@ -19,7 +21,7 @@ def intComputer(commands, index, onlyInput, outputs, relative_base):
             first = commands[index+1]
         elif instruction[2] == "2":
             # relative mode
-            print("relative")
+            first = commands[commands[index+1] + relative_base]
 
          # second value
         if instruction[3] == "0":
@@ -30,7 +32,7 @@ def intComputer(commands, index, onlyInput, outputs, relative_base):
             second = commands[index+2]
         elif instruction[3] == "2":
             # relative mode
-            print("relative")
+            second = commands[commands[index+2]+relative_base]
 
         if op_code == '5':
             pos_to_jump_to = second if first != 0 else index + 3
@@ -43,24 +45,30 @@ def intComputer(commands, index, onlyInput, outputs, relative_base):
         elif op_code == '3':
             if instruction[2] == "1":
                 commands[index + 1] = onlyInput
-            else:
+            elif instruction[2] == '0':
                 commands[commands[index + 1]] = onlyInput
-            pos_to_jump_to = index + 2
+            elif instruction[2] == '2':
+                commands[commands[index + 1] + relative_base] = onlyInput
             intComputer(commands, index + 2, onlyInput,
                         outputs, relative_base)
         elif op_code == '4':
             if instruction[2] == "1":
                 outputs.append(commands[index + 1])
-            else:
+            elif instruction[2] == '0':
                 outputs.append(commands[commands[index + 1]])
-            pos_to_jump_to = index + 2
+            elif instruction[2] == '2':
+                outputs.append(commands[commands[index + 1]+relative_base])
+            intComputer(commands, index + 2, onlyInput,
+                        outputs, relative_base)
+        elif op_code == '9':
+            relative_base = relative_base + first
             intComputer(commands, index + 2, onlyInput,
                         outputs, relative_base)
         else:
             pos = commands[index+3]
             if op_code == '7':
                 commands[pos] = 1 if first < second else 0
-            if op_code == '8':
+            elif op_code == '8':
                 commands[pos] = 1 if first == second else 0
             elif op_code == '1':
                 commands[pos] = first + second
@@ -71,11 +79,13 @@ def intComputer(commands, index, onlyInput, outputs, relative_base):
 
 
 def part1(commands):
-    onlyInput = 5
+    extension = [0] * 10889289
+    commands.extend(extension)
+    onlyInput = 1
     outputs = []
     relative_base = 0
     intComputer(commands, 0, onlyInput, outputs, relative_base)
-    print(outputs[0])
+    print(outputs)
 
 
 part1(line)
