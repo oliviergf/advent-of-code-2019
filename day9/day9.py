@@ -32,7 +32,7 @@ def intComputer(commands, index, onlyInput, outputs, relative_base):
             second = commands[index+2]
         elif instruction[3] == "2":
             # relative mode
-            second = commands[commands[index+2]+relative_base]
+            second = commands[commands[index+2] + relative_base]
 
         if op_code == '5':
             pos_to_jump_to = second if first != 0 else index + 3
@@ -62,8 +62,7 @@ def intComputer(commands, index, onlyInput, outputs, relative_base):
                         outputs, relative_base)
         elif op_code == '9':
             relative_base = relative_base + first
-            intComputer(commands, index + 2, onlyInput,
-                        outputs, relative_base)
+            intComputer(commands, index + 2, onlyInput, outputs, relative_base)
         else:
             pos = commands[index+3]
             if op_code == '7':
@@ -76,6 +75,8 @@ def intComputer(commands, index, onlyInput, outputs, relative_base):
                 # instruction = 2
                 commands[pos] = first * second
             intComputer(commands, index + 4, onlyInput, outputs, relative_base)
+    else:
+        print("closed")
 
 
 def part1(commands):
