@@ -25,11 +25,11 @@ def findMostAsteroid(pos_x, pos_y):
     # look every case
     for i in range(len(space[0])):
         for j in range(len(space)):
-            if i == pos_y and j == pos_y:
+            if i == pos_y and j == pos_y or space[i][j] == ".":
                 continue
             dif_y = pos_y - i
             dif_x = pos_x - j
-            directLine.add(np.arctan2(dif_x, dif_y) * 180 / np.pi)
+            directLine.add(np.arctan2(dif_x, dif_y))
 
     return len(directLine)
 
