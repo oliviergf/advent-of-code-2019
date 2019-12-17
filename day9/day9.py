@@ -61,7 +61,7 @@ def intComputer(commands, index, onlyInput, outputs, relative_base):
             intComputer(commands, index + 2, onlyInput,
                         outputs, relative_base)
         elif op_code == '9':
-            relative_base = relative_base + first
+            relative_base = first + relative_base
             intComputer(commands, index + 2, onlyInput, outputs, relative_base)
         else:
             pos = commands[index+3]
